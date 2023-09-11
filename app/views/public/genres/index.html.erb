@@ -29,7 +29,7 @@ genres index
               <tr>
 
                 <td><%= genre.name %></td>
-                <td><%= link_to "編集する", edit_admin_genre_path(genre.id), class: "btn btn-primary" %></td>
+                <td><%= link_to "編集する", genre_path(genre.id), class: "btn btn-primary" %></td>
               </tr>
             <% end %>
           </table>

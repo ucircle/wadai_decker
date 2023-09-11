@@ -1,0 +1,7 @@
+<h1><%= @genre.name %>の商品一覧</h1>
+
+<% @genre.topics.each do |topic| %>
+  <div class="topic">
+    <h2><%= topic.title %></h2>
+  </div>
+<% end %>

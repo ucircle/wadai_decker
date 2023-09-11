@@ -14,12 +14,13 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 # Public routes
   scope module: :public do
-    root to: "genres#index"
-    resources :topics, [:new, :create, :index, :show]
-    resources :genres, only: [:index, :show]
-
+  root to: "genres#index"
+  resources :genres, only: [:index, :show] do
+    resources :topics, only: [:new, :create, :index, :show] do
+      resources :comments, only: [:index, :create]
+    end
   end
-
+end
 # Admin routes
   namespace :admin do
     get "/" => "genres#index"
