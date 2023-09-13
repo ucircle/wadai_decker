@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# ジャンルの初期データを追加
+genre1 = Genre.create(name: '初対面')
+genre2 = Genre.create(name: 'デート')
+genre3 = Genre.create(name: '飲み会')
+
+genre1.topics.create(title: '一億もらったら？')
+genre2.topics.create(title: 'いまはまっていること')
+genre3.topics.create(title: 'おすすめのアプリ')
