@@ -15,7 +15,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 # Public routes
   scope module: :public do
   root to: "genres#index"
-  resources :genres, only: [:index, :show] do
+  resources :genres do
     resources :topics, only: [:new, :create, :index, :show] do
       resources :comments, only: [:index, :create]
     end

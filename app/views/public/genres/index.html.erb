@@ -7,18 +7,7 @@ genres index
 <div class="genre-container">
   <div class='container'>
     <div class='row'>
-      <div class='col-md-4'>
-        <h4 class="mr-5 mt-5">ジャンル追加</h4>
-        <div class="row">
-          <%= form_with model: @genre, method: :post do |f| %>
-            <p class="genre ml-3">ジャンル名</p>
-            <p class="ml-3">
-              <%= f.text_field :name %>
-              <%= f.submit '新規登録', class: "btn", style: "background-color: #32cd32; color: white; mx-3" %>
-            </p>
-          <% end %>
-        </div>
-      </div>
+
       <div class='col-md-8'>
         <div class="genre-list">
           <h4 class="mt-5">ジャンル一覧</h4>
@@ -29,7 +18,8 @@ genres index
               <tr>
 
                 <td><%= genre.name %></td>
-                <td><%= link_to "編集する", genre_path(genre.id), class: "btn btn-primary" %></td>
+                <td class="image-container"><%= link_to image_tag("japan.jpg", alt: "初対面"), genre_path(genre.id), class: "btn btn-primary" %></td>
+              <div class="text-overlay">初対面</div>
               </tr>
             <% end %>
           </table>

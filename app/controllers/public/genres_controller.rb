@@ -14,14 +14,18 @@ class Public::GenresController < ApplicationController
   end
 
   def new
-    @genre = Genre.new
+    @topic = Topic.new
   end
 
   def create
-    @genre = Genre.new(genre_params)
-    @genre.save
-    redirect_to admin_genres_path
+    @topic = Topic.new(topic_params)
+    if @topic.save
+      redirect_to @topic, notice: 'トピックが投稿されました'
+    else
+      render :new
+    end
   end
+
 
   def edit
     @genre = Genre.find(params[:id])
@@ -39,8 +43,8 @@ class Public::GenresController < ApplicationController
 
   private
 
-  def genre_params
-     params.require(:genre).permit(:name)
+  def topic_params
+     params.require(:topic).permit(:title)
   end
 
 end

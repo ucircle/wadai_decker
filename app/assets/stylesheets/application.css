@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+.image-container {
+  position: relative;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5); /* 背景色を設定（オプション） */
+  color: #fff; /* テキストの色を設定（オプション） */
+  padding: 10px; /* テキストのパディングを設定（オプション） */
+}

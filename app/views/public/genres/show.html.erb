@@ -1,7 +1,17 @@
-<h1><%= @genre.name %>の商品一覧</h1>
+<h1><%= @genre.name %>の話題一覧</h1>
 
 <% @genre.topics.each do |topic| %>
   <div class="topic">
     <h2><%= topic.title %></h2>
+  </div>
+<% end %>
+
+<%= form_with(model: @topic, url: genre_topics_path(@genre)) do |form| %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  <div class="actions">
+    <%= form.submit "投稿" %>
   </div>
 <% end %>
