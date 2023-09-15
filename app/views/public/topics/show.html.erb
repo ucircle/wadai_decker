@@ -1,2 +1,20 @@
 この話題への皆の回答
+<h1><%= @topic.title %></h1>
 
+<div>
+  <p>コメント件数：<%= @topic.comments.count %></p>
+  <% @topic.comments.each do |comment| %>
+    <div>
+      <%= comment.comment %>
+    </div>
+  <% end %>
+</div>
+
+<div>
+  <%= form_with(model: [@genre, @topic, Comment.new], url: genre_topic_comments_path(@genre, @topic)) do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>
+
+<%= link_to 'もどる', genre_path(@topic.genre) %>

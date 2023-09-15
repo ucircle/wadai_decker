@@ -1,11 +1,19 @@
 class Public::CommentsController < ApplicationController
-  
+
+  def index
+    @comments = Comment.all
+  end
+
   def create
-    topic = Topic.find(params[:topic_id])
-    comment = current_user.comments.new(comment_params)
-    comment.topic_id = topic.id
-    comment.save
-    redirect_to topic_path(topic)
+    @topic = Topic.find(params[:topic_id])
+    @genre = @topic.genre # トピックからジャンルを取得
+    @comment = @topic.comments.build(comment_params)
+    if @comment.save
+      redirect_to genre_topic_path(@genre, @topic), notice: 'コメントが投稿されました'
+    else
+      flash.now[:alert] = 'コメントの投稿に失敗しました'
+      render 'public/topics/show'
+    end
   end
 
   private

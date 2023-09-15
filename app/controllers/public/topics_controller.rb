@@ -14,8 +14,10 @@ class Public::TopicsController < ApplicationController
 
   def show
     @topic = Topic.find(params[:id])
-
+    @genre = @topic.genre
+    @comment = Comment.new
   end
+
 
   def new
     @topic = Topic.new

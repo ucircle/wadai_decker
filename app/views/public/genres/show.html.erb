@@ -2,7 +2,7 @@
 
 <% @genre.topics.each do |topic| %>
   <div class="topic">
-    <h2><%= topic.title %></h2>
+  <%= link_to topic.title, genre_topic_path(@genre, topic) %>
   </div>
 <% end %>
 
@@ -15,3 +15,5 @@
     <%= form.submit "投稿" %>
   </div>
 <% end %>
+
+<%= link_to 'もどる', genres_path %>
