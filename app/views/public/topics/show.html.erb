@@ -1,12 +1,27 @@
 この話題への皆の回答
 <h1><%= @topic.title %></h1>
 
+<ul>
+  <% @tags.each do |tag| %>
+    <li>
+      <%= link_to tag.name, "#" %>
+    </li>
+  <% end %>
+</ul>
+
+<%= f.text_field :tag_names, placeholder: "タグを入力してください" %>
+
+
 <div>
   <p>コメント件数：<%= @topic.comments.count %></p>
+  <% if @topic.comments.any? %>
   <% @topic.comments.each do |comment| %>
     <div>
       <%= comment.comment %>
     </div>
+  <% end %>
+  <% else %>
+    <p>コメントはありません。</p>
   <% end %>
 </div>
 

@@ -20,6 +20,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
       resources :comments, only: [:index, :create]
     end
   end
+  
 end
 # Admin routes
   namespace :admin do
