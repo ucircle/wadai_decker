@@ -1,5 +1,6 @@
 class Public::TopicsController < ApplicationController
 
+
   def index
     @genres = Genre.all
 
@@ -16,6 +17,7 @@ class Public::TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @genre = @topic.genre
     @comment = Comment.new
+    @tag_list = @topic.tag_list
   end
 
 
@@ -33,11 +35,26 @@ class Public::TopicsController < ApplicationController
     end
   end
 
+def update
+  @topic = Topic.find(params[:id])
 
+  # フォームから送信された新しいタグを取得
+  new_tags = params[:topic][:tag_list].split(",").map(&:strip)
 
-  private
+  # 既存のタグと新しいタグを組み合わせる
+  combined_tags = @topic.tag_list + new_tags
+
+  if @topic.update(tag_list: combined_tags)
+    redirect_to genre_topic_path(@topic.genre, @topic), notice: 'タグが更新されました'
+  else
+    flash.now[:alert] = 'タグの更新に失敗しました'
+    render :show
+  end
+end
+
+private
 
   def topic_params
-  params.permit(:title)
+  params.require(:topic).permit(:title, :tag_list)
   end
 end

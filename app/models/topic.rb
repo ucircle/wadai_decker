@@ -1,8 +1,9 @@
 class Topic < ApplicationRecord
-    
+ acts_as_taggable
+ 
  belongs_to :genre
  
  has_many :comments
  
- has_and_belongs_to_many :tags
+
 end
