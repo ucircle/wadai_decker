@@ -1,0 +1,10 @@
+<h1>トピック一覧</h1>
+
+<ul>
+  <% @topics.each do |topic| %>
+    <li>
+      <%= link_to topic.title, genre_topic_path(topic.genre, topic) %>
+      <!-- 他のトピックの情報を表示 -->
+    </li>
+  <% end %>
+</ul>

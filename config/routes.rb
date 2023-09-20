@@ -15,9 +15,13 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 # Public routes
 scope module: :public do
   root to: "genres#index"
+  resources :customers, only: [:show] do
+      get 'bookmarks', on: :member 
+    end
   resources :genres do
     resources :topics, only: [:new, :create, :index, :show, :update] do
       resources :comments, only: [:index, :create]
+      resources :bookmarks, only: [:create, :destroy]
     end
   end
 

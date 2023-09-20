@@ -1,11 +1,14 @@
 この話題への皆の回答
 <h1><%= @topic.title %></h1>
 
-<% @tag_list.each do |tag|%>
-  <div class="btn btn-primary">
-    <%= tag %>
-  </div>
+
+
+<% @tag_list.each do |tag| %>
+  <span class="badge badge-primary mr-1 p-2">
+    <%= link_to tag, genre_topics_path(tag_name: tag), class: "text-white" %>
+  </span>
 <% end %>
+
 
 <div>
   <%= form_with model: [@genre, @topic], local: true do |f| %>
@@ -16,6 +19,15 @@
   <% end %>
   </div>
 </div>
+
+<% if customer_signed_in? %>
+  <% if current_customer.bookmarked?(@topic) %>
+    <%= link_to 'ブックマーク解除', genre_topic_bookmark_path(topic_id: @topic.id, id: @topic.bookmarks.find_by(customer: current_customer)), method: :delete %>
+  <% else %>
+    <%= link_to 'ブックマーク', genre_topic_bookmarks_path(topic_id: @topic.id), method: :post %>
+  <% end %>
+<% end %>
+
 
 <div>
   <p>コメント件数：<%= @topic.comments.count %></p>
@@ -30,4 +42,21 @@
   <% end %>
 </div>
 
+<!-- コメントフォーム -->
+<% if customer_signed_in? %>
+  <%= form_with(model: Comment.new, url: genre_topic_comments_path(@genre,@topic), local: true) do |form| %>
+    <div class="field">
+      <%= form.text_area :comment, placeholder: "コメントを入力してください" %>
+    </div>
+    <div class="actions">
+      <%= form.submit "コメントする" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>コメントをするにはログインが必要です。</p>
+<% end %>
+
 <%= link_to 'もどる', genre_path(@topic.genre) %>
+
+
+<%= link_to 'マイページ', customer_path(current_customer.id) %>

@@ -3,3 +3,15 @@
 <%= @customer.name %>
 
 お気に入り話題
+<h1>ブックマーク一覧</h1>
+
+<% if @bookmarked_topics.present? %>
+  <% @bookmarked_topics.each do |topic| %>
+    <div>
+      <%= link_to topic.title, genre_topic_path(topic.genre, topic) %>
+      <!-- ブックマークされたトピックへのリンクを表示 -->
+    </div>
+  <% end %>
+<% else %>
+  <p>ブックマークされたトピックはありません。</p>
+<% end %>

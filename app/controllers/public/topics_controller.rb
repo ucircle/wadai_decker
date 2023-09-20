@@ -1,17 +1,19 @@
 class Public::TopicsController < ApplicationController
 
 
-  def index
-    @genres = Genre.all
+def index
+  @genres = Genre.all
 
-    if params[:q]
-      @search = Item.ransack(params[:q])
-      @topics = @search.result(distinct: true).page(params[:page]).per(6)
-    else
-      @topics = Topic.page(params[:page]).per(6)
-    end
-
+  if params[:q]
+    @topics = @search.result(distinct: true).page(params[:page]).per(6)
+  elsif params[:tag_name]
+    # タグによるフィルタリング
+    @topics = Topic.tagged_with(params[:tag_name]).page(params[:page]).per(6)
+  else
+    @topics = Topic.page(params[:page]).per(6)
   end
+end
+
 
   def show
     @topic = Topic.find(params[:id])
