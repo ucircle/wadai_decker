@@ -1,0 +1,5 @@
+<% @random_topics.each do |topic| %>
+  <div>
+    <%= link_to topic.title, genre_topic_path(topic.genre, topic) %>
+  </div>
+<% end %>

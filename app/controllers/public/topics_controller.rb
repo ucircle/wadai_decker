@@ -54,6 +54,18 @@ def update
   end
 end
 
+
+def random_topics
+    @genre = Genre.find(params[:genre_id])
+    @random_topics = Topic.order("RANDOM()").limit(5) # ランダムなトピックを5つ取得
+   
+    respond_to do |format|
+    format.html
+    format.js # 追加
+  end
+
+end
+
 private
 
   def topic_params

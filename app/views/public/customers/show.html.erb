@@ -15,3 +15,31 @@
 <% else %>
   <p>ブックマークされたトピックはありません。</p>
 <% end %>
+
+
+<!-- ボタンをクリックしたときにランダムなトピックを取得するためのボタンを追加 -->
+<button id="random-topic-button" class="btn btn-primary">ランダムなトピックを表示</button>
+
+<!-- ランダムなトピックを表示するためのコンテナ -->
+<div id="random-topic-container"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // ボタンクリック時のイベントハンドラ
+  $('#random-topic-button').on('click', function() {
+    // Ajaxリクエストを送信
+    $.ajax({
+      url: '<%= random_topics_genre_topics_path(@genre) %>', // ランダムなトピックを取得するルートへのパス
+      type: 'GET',
+      dataType: 'html',
+      success: function(response) {
+        // 取得したHTMLをコンテナに表示
+        $('#random-topic-container').html(response);
+      },
+      error: function() {
+        // エラーハンドリング
+        alert('ランダムなトピックの取得に失敗しました。');
+      }
+    });
+  });
+</script>
