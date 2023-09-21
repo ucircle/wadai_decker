@@ -22,15 +22,14 @@
 
 <% if customer_signed_in? %>
   <% if current_customer.bookmarked?(@topic) %>
-    <%= link_to 'ブックマーク解除', genre_topic_bookmark_path(topic_id: @topic.id, id: @topic.bookmarks.find_by(customer: current_customer)), method: :delete %>
+    <%= link_to 'お気に入り解除', genre_topic_bookmark_path(topic_id: @topic.id, id: @topic.bookmarks.find_by(customer: current_customer)), method: :delete %>
   <% else %>
-    <%= link_to 'ブックマーク', genre_topic_bookmarks_path(topic_id: @topic.id), method: :post %>
+    <%= link_to 'お気に入り', genre_topic_bookmarks_path(topic_id: @topic.id), method: :post %>
   <% end %>
 <% end %>
 
 
 <div>
-  <p>コメント件数：<%= @topic.comments.count %></p>
   <% if @topic.comments.any? %>
     <% @topic.comments.each do |comment| %>
       <div>
