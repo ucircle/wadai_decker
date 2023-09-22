@@ -1,38 +1,45 @@
+<div class="bg-light p-4">
+
 この話題への皆の回答
-<h1><%= @topic.title %></h1>
+<!-- ページタイトルを中央に寄せる -->
+<h1 class="text-center mb-4"><%= @topic.title %></h1>
 
-
-
-<% @tag_list.each do |tag| %>
-  <span class="badge badge-primary mr-1 p-2">
-    <%= link_to tag, genre_topics_path(tag_name: tag), class: "text-white" %>
-  </span>
-<% end %>
-
-
-<div>
-  <%= form_with model: [@genre, @topic], local: true do |f| %>
-    <%= f.label :tag_list, 'タグ (コンマで区切って入力)' %>
-    <%= f.text_field :tag_list, value: @topic.tag_list.join(','), class: 'form-control' %>
-    <%= f.submit "タグを更新" %>
-    </label>
+<!-- タグリストを中央に寄せる -->
+<div class="text-center mb-4">
+  <% @tag_list.each do |tag| %>
+    <span class="badge badge-primary mr-1 p-2">
+      <%= link_to tag, genre_topics_path(tag_name: tag), class: "text-white" %>
+    </span>
   <% end %>
-  </div>
 </div>
 
-<% if customer_signed_in? %>
-  <% if current_customer.bookmarked?(@topic) %>
-    <%= link_to 'お気に入り解除', genre_topic_bookmark_path(topic_id: @topic.id, id: @topic.bookmarks.find_by(customer: current_customer)), method: :delete %>
-  <% else %>
-    <%= link_to 'お気に入り', genre_topic_bookmarks_path(topic_id: @topic.id), method: :post %>
+<!-- タグの編集フォームを中央に寄せる -->
+<div class="text-center mb-4">
+  <%= form_with model: [@genre, @topic], local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :tag_list, 'タグ (コンマで区切って入力)' %>
+      <%= f.text_field :tag_list, value: @topic.tag_list.join(','), class: 'form-control' %>
+    </div>
+    <%= f.submit "タグを更新", class: 'btn btn-primary' %>
   <% end %>
+</div>
+
+<!-- お気に入りボタンを中央に寄せる -->
+<% if customer_signed_in? %>
+  <div class="text-center mb-4">
+    <% if current_customer.bookmarked?(@topic) %>
+      <%= link_to 'お気に入り解除', genre_topic_bookmark_path(topic_id: @topic.id, id: @topic.bookmarks.find_by(customer: current_customer)), method: :delete, class: 'btn btn-danger' %>
+    <% else %>
+      <%= link_to 'お気に入り', genre_topic_bookmarks_path(topic_id: @topic.id), method: :post, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 <% end %>
 
-
-<div>
+<!-- コメント一覧を中央に寄せる -->
+<div class="text-center mb-4">
   <% if @topic.comments.any? %>
     <% @topic.comments.each do |comment| %>
-      <div>
+      <div class="alert alert-secondary">
         <%= comment.comment %>
       </div>
     <% end %>
@@ -41,21 +48,31 @@
   <% end %>
 </div>
 
-<!-- コメントフォーム -->
+<!-- コメントフォームを中央に寄せる -->
 <% if customer_signed_in? %>
-  <%= form_with(model: Comment.new, url: genre_topic_comments_path(@genre,@topic), local: true) do |form| %>
-    <div class="field">
-      <%= form.text_area :comment, placeholder: "コメントを入力してください" %>
-    </div>
-    <div class="actions">
-      <%= form.submit "コメントする" %>
-    </div>
-  <% end %>
+  <div class="text-center mb-4">
+    <%= form_with(model: Comment.new, url: genre_topic_comments_path(@genre,@topic), local: true) do |form| %>
+      <div class="form-group">
+        <%= form.text_area :comment, placeholder: "コメントを入力してください", class: 'form-control' %>
+      </div>
+      <%= form.submit "コメントする", class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 <% else %>
-  <p>コメントをするにはログインが必要です。</p>
+  <p class="text-center">コメントをするにはログインが必要です。</p>
 <% end %>
 
-<%= link_to 'もどる', genre_path(@topic.genre) %>
+<!-- 戻るリンクを中央に寄せる -->
+<div class="text-center mb-4">
+  <%= link_to 'もどる', genre_path(@topic.genre), class: 'btn btn-secondary' %>
+</div>
 
+<!-- マイページへのリンクを中央に寄せる -->
+<div class="text-center">
+  <%= link_to 'マイページ', customer_path(current_customer.id), class: 'btn btn-primary' %>
+</div>
+</div>
 
-<%= link_to 'マイページ', customer_path(current_customer.id) %>
+<% if admin_signed_in? %>
+  <%= link_to 'トピックを削除', admin_topic_path(@topic), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+<% end %>

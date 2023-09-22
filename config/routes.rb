@@ -19,6 +19,9 @@ scope module: :public do
       get 'bookmarks', on: :member
     end
   resources :genres do
+    member do
+      post :create_topic # 新しいトピックを作成するアクションに対応するルートを追加
+    end
     resources :topics, only: [:new, :create, :index, :show, :update] do
       collection do
         get :random_topics # ランダムなトピックを表示するためのルートを追加
@@ -32,7 +35,7 @@ scope module: :public do
 end
 # Admin routes
   namespace :admin do
-    get "/" => "genres#index"
+    root to: "genres#index"
     resources :topics
     resources :genres
   end

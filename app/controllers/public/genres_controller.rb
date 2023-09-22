@@ -10,23 +10,24 @@ class Public::GenresController < ApplicationController
 
   def show
     @genre = Genre.find(params[:id])
-    @topics = @genre.topics
-    @topic = Topic.find(params[:id])
+    @topics = @genre.topics.page(params[:page]).per(10)
+    @new_topic = Topic.new
   end
 
   def new
     @topic = Topic.new
   end
 
-  def create
-    @topic = Topic.new(topic_params)
-    if @topic.save
-      redirect_to @topic, notice: 'トピックが投稿されました'
+  def create_topic
+    @genre = Genre.find(params[:id])
+    @new_topic = @genre.topics.build(topic_params) # 新しいトピックを作成し、ジャンルに関連付ける
+
+    if @new_topic.save
+      redirect_to genre_path(@genre), notice: 'トピックが投稿されました'
     else
-      render :new
+      render :show
     end
   end
-
 
   def edit
     @genre = Genre.find(params[:id])
@@ -45,7 +46,7 @@ class Public::GenresController < ApplicationController
   private
 
   def topic_params
-     params.require(:topic).permit(:title)
+     params.require(:topic).permit(:title, :image)
   end
 
 end

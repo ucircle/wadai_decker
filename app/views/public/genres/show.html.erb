@@ -2,11 +2,12 @@
 
 <% @genre.topics.each do |topic| %>
   <div class="topic">
-  <%= link_to topic.title, genre_topic_path(@genre, topic) %>
+    <%= link_to topic.title, genre_topic_path(@genre, topic) %>
   </div>
 <% end %>
+<%= paginate @topics %>
 
-<%= form_with(model: @topic, url: genre_topics_path(@genre)) do |form| %>
+<%= form_with(model: @new_topic, url: genre_topics_path(@genre)) do |form| %>
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
