@@ -1,10 +1,10 @@
 <div class="bg-light p-4">
 
 この話題への皆の回答
-<!-- ページタイトルを中央に寄せる -->
+
 <h1 class="text-center mb-4"><%= @topic.title %></h1>
 
-<!-- タグリストを中央に寄せる -->
+
 <div class="text-center mb-4">
   <% @tag_list.each do |tag| %>
     <span class="badge badge-primary mr-1 p-2">
@@ -13,7 +13,7 @@
   <% end %>
 </div>
 
-<!-- タグの編集フォームを中央に寄せる -->
+
 <div class="text-center mb-4">
   <%= form_with model: [@genre, @topic], local: true do |f| %>
     <div class="form-group">
@@ -24,7 +24,7 @@
   <% end %>
 </div>
 
-<!-- お気に入りボタンを中央に寄せる -->
+
 <% if customer_signed_in? %>
   <div class="text-center mb-4">
     <% if current_customer.bookmarked?(@topic) %>
@@ -35,7 +35,6 @@
   </div>
 <% end %>
 
-<!-- コメント一覧を中央に寄せる -->
 <div class="text-center mb-4">
   <% if @topic.comments.any? %>
     <% @topic.comments.each do |comment| %>
@@ -48,7 +47,6 @@
   <% end %>
 </div>
 
-<!-- コメントフォームを中央に寄せる -->
 <% if customer_signed_in? %>
   <div class="text-center mb-4">
     <%= form_with(model: Comment.new, url: genre_topic_comments_path(@genre,@topic), local: true) do |form| %>
@@ -62,12 +60,10 @@
   <p class="text-center">コメントをするにはログインが必要です。</p>
 <% end %>
 
-<!-- 戻るリンクを中央に寄せる -->
 <div class="text-center mb-4">
   <%= link_to 'もどる', genre_path(@topic.genre), class: 'btn btn-secondary' %>
 </div>
 
-<!-- マイページへのリンクを中央に寄せる -->
 <div class="text-center">
   <%= link_to 'マイページ', customer_path(current_customer.id), class: 'btn btn-primary' %>
 </div>

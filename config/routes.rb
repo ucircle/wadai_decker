@@ -28,7 +28,6 @@ scope module: :public do
        end
       resources :comments, only: [:index, :create]
       resources :bookmarks, only: [:create, :destroy]
-
     end
   end
 

@@ -5,16 +5,18 @@ class Customer < ApplicationRecord
          :recoverable, :rememberable, :validatable
     has_many :comments
     has_many :bookmarks
+    has_many :bookmarked_topics, through: :bookmarks, source: :topic
 
-  def bookmark(topic)
-    bookmarks.create(topic: topic)
-  end
+    def bookmark(topic)
+     bookmarks.create(topic: topic)
+    end
 
-  def unbookmark(topic)
-    bookmarks.find_by(topic: topic).destroy
-  end
+    def unbookmark(topic)
+     bookmarks.find_by(topic: topic)&.destroy
+    end
 
-  def bookmarked?(topic)
-    bookmarks.exists?(topic: topic)
-  end
+    def bookmarked?(topic)
+     bookmarks.exists?(topic: topic)
+    end
+
 end

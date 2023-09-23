@@ -7,4 +7,6 @@ class Topic < ApplicationRecord
 
  has_many :bookmarks
 
+ paginates_per 5
+
 end
