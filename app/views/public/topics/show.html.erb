@@ -1,6 +1,5 @@
-<div class="bg-light p-4">
 
-この話題への皆の回答
+
 
 <h1 class="text-center mb-4"><%= @topic.title %></h1>
 
@@ -35,7 +34,9 @@
   </div>
 <% end %>
 
-
+<div class=text-center>
+この話題への皆の回答
+</div>
 
 <% if customer_signed_in? %>
   <div class="text-center mb-4">
@@ -81,7 +82,7 @@
 <div class="text-center">
   <%= link_to 'マイページ', customer_path(current_customer.id), class: 'btn btn-primary' %>
 </div>
-</div>
+
 
 <% if admin_signed_in? %>
   <%= link_to 'トピックを削除', admin_topic_path(@topic), method: :delete, data: { confirm: '本当に削除しますか？' } %>

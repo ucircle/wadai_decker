@@ -11,7 +11,7 @@ class Public::CustomersController < ApplicationController
 
    @bookmarked_topics = @customer.bookmarked_topics
    @random_topics = Topic.order("RANDOM()").limit(5)
-   
+
   end
 
 

@@ -13,8 +13,10 @@
  *= require_tree .
  *= require_self
  */
- body {
-  background-color: #f0f0f0; /* 任意の背景色を指定 */
+ main {
+   min-height: 100vh;
+  background-color: #FF9872;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
  .navbar {
@@ -46,4 +48,9 @@
   color: white; /* テキストの色を設定 */
   padding: 10px 20px; /* テキストの内側の余白を設定 */
   text-align: center; /* テキストを中央に配置 */
+}
+
+.custom-pagination a {
+  font-size: 20px; /* フォントサイズを大きくする */
+  padding: 10px 15px; /* パディングを追加してリンクを大きくする */
 }
