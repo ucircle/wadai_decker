@@ -10,8 +10,5 @@ class Topic < ApplicationRecord
 
 validates :title, presence: true
 
-def url
- Rails.application.routes.url_helpers.genre_topic_url(self.genre, self)
-end
 
 end

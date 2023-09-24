@@ -42,20 +42,18 @@
 <script>
   // ボタンクリック時のイベントハンドラ
   $('#random-topic-button').on('click', function() {
-    // JSONデータを取得
-    var randomTopicsData = <%= raw @random_topics.to_json %>;
-
-    // 取得したJSONデータを処理
-    $('#random-topic-list').empty(); 
-
-    for (var i = 0; i < randomTopicsData.length; i++) {
-      var topic = randomTopicsData[i];
-      if (topic.url) {
-        var link = '<a href="' + topic.url + '">' + topic.title + '</a>';
-        $('#random-topic-list').append('<li>' + link + '</li>');
-      } else {
-        console.error('Topic URL is missing:', topic);
+    $.ajax({
+      url: '<%= random_topics_genre_topics_path(@genre) %>', // ランダムなトピックを取得するルートへのパス
+      type: 'GET',
+      dataType: 'html',
+      success: function(response) {
+        // 取得したHTMLをコンテナに表示
+        $('#random-topic-container').html(response);
+      },
+      error: function() {
+        // エラーハンドリング
+        alert('ランダムなトピックの取得に失敗しました。');
       }
-    }
+    });
   });
 </script>
