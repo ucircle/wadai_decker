@@ -1,20 +1,37 @@
-<h1><%= @genre.name %>の話題一覧</h1>
+<div class="container mt-4">
+  <%= render "public/shared/error_messages", resource: resource %>
+  <h1><%= @genre.name %>の話題一覧</h1>
 
-<% @genre.topics.each do |topic| %>
-  <div class="topic">
-    <%= link_to topic.title, genre_topic_path(@genre, topic) %>
-  </div>
-<% end %>
-<%= paginate @topics %>
+  <div class="row">
+    <div class="col-md-8 text-center">
+      <% @topics.each do |topic| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to topic.title, genre_topic_path(@genre, topic) %></h5>
+          </div>
+        </div>
+      <% end %>
 
-<%= form_with(model: @new_topic, url: genre_topics_path(@genre)) do |form| %>
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-  <div class="actions">
-    <%= form.submit "投稿" %>
-  </div>
-<% end %>
+      <%= paginate @topics %>
+    </div>
 
-<%= link_to 'もどる', genres_path %>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <%= form_with(model: @new_topic, url: genre_topics_path(@genre)) do |form| %>
+            <h5 class="card-title">新しい話題を投稿</h5>
+            <div class="form-group">
+              <%= form.label :title %>
+              <%= form.text_field :title, class: "form-control" %>
+            </div>
+            <div class="text-center">
+              <%= form.submit "投稿", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to 'もどる', genres_path, class: "btn btn-secondary mt-3" %>
+</div>

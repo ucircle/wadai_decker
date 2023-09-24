@@ -1,47 +1,61 @@
-マイページ
+<div class="container">
+  <h1 class="mt-5 text-center">ブックマーク一覧</h1>
 
-<%= @customer.name %>
-
-お気に入り話題
-<h1>ブックマーク一覧</h1>
-
-<% if @bookmarked_topics.present? %>
-  <% @bookmarked_topics.each do |topic| %>
-    <div>
-      <%= link_to topic.title, genre_topic_path(topic.genre, topic) %>
-      <!-- ブックマークされたトピックへのリンクを表示 -->
+  <div class="row text-center mt-4">
+    <div class="col">
+      <% if @bookmarked_topics.present? %>
+        <% @bookmarked_topics.each do |topic| %>
+          <div class="mb-3">
+            <%= link_to topic.title, genre_topic_path(topic.genre, topic), class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>ブックマークされたトピックはありません。</p>
+      <% end %>
     </div>
-  <% end %>
-<% else %>
-  <p>ブックマークされたトピックはありません。</p>
-<% end %>
+  </div>
 
 
-<!-- ボタンをクリックしたときにランダムなトピックを取得するためのボタンを追加 -->
-<button id="random-topic-button" class="btn btn-primary">ランダムなトピックを表示</button>
+ <div class="row mt-4">
+  <div class="col mx-auto">
+    <div class="card-body text-center">
+      <!-- ボタンをクリックしたときにランダムなトピックを取得するためのボタンを追加 -->
+      <button id="random-topic-button" class="btn btn-success">ランダムなトピックを表示</button>
+    </div>
+  </div>
+</div>
 
-<!-- ランダムなトピックを表示するためのコンテナ -->
-<div id="random-topic-container"></div>
+<div class="row mt-4">
+  <div class="col mx-auto text-center">
+    <div class="card border-primary mb-3">
+      <div class="card-body" id="random-topic-container">
+        <!-- ランダムなトピックを表示するためのコンテナ -->
+        <ul id="random-topic-list">
+          <!-- ここにランダムなトピックが表示されます -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   // ボタンクリック時のイベントハンドラ
   $('#random-topic-button').on('click', function() {
-    // Ajaxリクエストを送信
-    $.ajax({
-      url: '<%= random_topics_genre_topics_path(@genre) %>', // ランダムなトピックを取得するルートへのパス
-      type: 'GET',
-      dataType: 'html',
-      success: function(response) {
-        // 取得したHTMLをコンテナに表示
-        $('#random-topic-container').html(response);
-      },
-      error: function() {
-        // エラーハンドリング
-        alert('ランダムなトピックの取得に失敗しました。');
+    // JSONデータを取得
+    var randomTopicsData = <%= raw @random_topics.to_json %>;
+
+    // 取得したJSONデータを処理
+    $('#random-topic-list').empty(); 
+
+    for (var i = 0; i < randomTopicsData.length; i++) {
+      var topic = randomTopicsData[i];
+      if (topic.url) {
+        var link = '<a href="' + topic.url + '">' + topic.title + '</a>';
+        $('#random-topic-list').append('<li>' + link + '</li>');
+      } else {
+        console.error('Topic URL is missing:', topic);
       }
-    });
+    }
   });
 </script>
-
-<%= link_to 'top', genres_path %>

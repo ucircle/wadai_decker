@@ -13,19 +13,37 @@
  *= require_tree .
  *= require_self
  */
-.image-container img{
-  position: relative;
-  width: 50%;
-  height: auto;
+ body {
+  background-color: #f0f0f0; /* 任意の背景色を指定 */
 }
-.text-overlay {
-  position: absolute; /* 相対的な位置に配置 */
-  top: 50%; /* 上端を親要素の中央に配置 */
-  left: 50%; /* 左端を親要素の中央に配置 */
-  transform: translate(-50%, -50%); /* 中央寄せ */
-  background-color: rgba(0, 0, 0, 0.7); /* 背景色（必要に応じて調整） */
-  color: white; /* テキストの色 */
-  padding: 10px; /* テキスト周りの余白（必要に応じて調整） */
-  border-radius: 5px; /* 角丸（必要に応じて調整） */
-  z-index: 1; /* テキストを画像の上に配置 */
+
+ .navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* 他のコンテンツよりも手前に表示 */
+}
+
+.image-container {
+  position: relative; /* 相対位置指定 */
+  width: 100%; /* 横幅いっぱいに表示 */
+  height: auto; /* 高さは自動調整 */
+}
+
+.image-container img {
+  width: 100%; /* 画像を横幅いっぱいに表示 */
+  height: auto; /* 高さは自動調整 */
+}
+
+.overlay-text {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 50px;
+  position: absolute; /* 絶対位置指定 */
+  top: 50%; /* 上から50%の位置に配置（中央に配置するため） */
+  left: 50%; /* 左から50%の位置に配置（中央に配置するため） */
+  transform: translate(-50%, -50%); /* 中央に配置 */
+  background-color: rgba(0, 0, 0, 0.5); /* 背景色と透明度を設定 */
+  color: white; /* テキストの色を設定 */
+  padding: 10px 20px; /* テキストの内側の余白を設定 */
+  text-align: center; /* テキストを中央に配置 */
 }

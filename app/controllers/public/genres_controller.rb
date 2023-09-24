@@ -3,7 +3,6 @@ class Public::GenresController < ApplicationController
 
 
   def index
-    @genre = Genre.new
     @genres = Genre.all
 
   end
@@ -25,7 +24,7 @@ class Public::GenresController < ApplicationController
     if @new_topic.save
       redirect_to genre_path(@genre), notice: 'トピックが投稿されました'
     else
-      render :show
+      render :'public/genres/show'
     end
   end
 

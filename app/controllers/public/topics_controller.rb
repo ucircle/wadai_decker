@@ -30,10 +30,11 @@ end
   def create
     @genre = Genre.find(params[:genre_id]) # ジャンルを取得
     @topic = @genre.topics.build(topic_params) # ジャンルに関連づけてトピックを作成
+
     if @topic.save
       redirect_to genre_path(@genre), notice: 'トピックが投稿されました' # ジャンル詳細ページにリダイレクト
     else
-      render :new
+      redirect_to genre_path(@genre)
     end
   end
 
@@ -58,12 +59,9 @@ end
 def random_topics
     @genre = Genre.find(params[:genre_id])
     @random_topics = Topic.order("RANDOM()").limit(5) # ランダムなトピックを5つ取得
-
     respond_to do |format|
-    format.html
-    format.js # 追加
-  end
-
+      format.json { render json: @random_topics }
+    end
 end
 
 private

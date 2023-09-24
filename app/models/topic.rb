@@ -7,6 +7,11 @@ class Topic < ApplicationRecord
 
  has_many :bookmarks
 
- paginates_per 5
+
+validates :title, presence: true
+
+def url
+ Rails.application.routes.url_helpers.genre_topic_url(self.genre, self)
+end
 
 end

@@ -26,7 +26,7 @@ scope module: :public do
       collection do
         get :random_topics # ランダムなトピックを表示するためのルートを追加
        end
-      resources :comments, only: [:index, :create]
+      resources :comments, only: [:index, :create, :destroy]
       resources :bookmarks, only: [:create, :destroy]
     end
   end
@@ -34,8 +34,10 @@ scope module: :public do
 end
 # Admin routes
   namespace :admin do
-    root to: "genres#index"
-    resources :topics
+    root to: "public/genres#index"
+    resources :topics do
+      resources :comments, only: [:index, :destroy]
+    end
     resources :genres
   end
 end

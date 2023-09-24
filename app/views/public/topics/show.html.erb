@@ -35,23 +35,13 @@
   </div>
 <% end %>
 
-<div class="text-center mb-4">
-  <% if @topic.comments.any? %>
-    <% @topic.comments.each do |comment| %>
-      <div class="alert alert-secondary">
-        <%= comment.comment %>
-      </div>
-    <% end %>
-  <% else %>
-    <p>コメントはありません。</p>
-  <% end %>
-</div>
+
 
 <% if customer_signed_in? %>
   <div class="text-center mb-4">
     <%= form_with(model: Comment.new, url: genre_topic_comments_path(@genre,@topic), local: true) do |form| %>
       <div class="form-group">
-        <%= form.text_area :comment, placeholder: "コメントを入力してください", class: 'form-control' %>
+        <%= form.text_area :comment, placeholder: "この話題への回答を入力してください", class: 'form-control' %>
       </div>
       <%= form.submit "コメントする", class: 'btn btn-primary' %>
     <% end %>
@@ -59,6 +49,30 @@
 <% else %>
   <p class="text-center">コメントをするにはログインが必要です。</p>
 <% end %>
+
+
+<div class="text-center mb-4">
+  <% if @topic.comments.any? %>
+    <% @topic.comments.each do |comment| %>
+      <div class="alert alert-secondary">
+        <%= comment.comment %>
+        <% if customer_signed_in? %>
+          <% if current_customer == comment.customer || admin_signed_in? %>
+            <% if admin_signed_in? %>
+              <%= link_to 'コメントを削除', admin_topic_comment_path(@topic, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <% else %>
+              <%= link_to 'コメントを削除', genre_topic_comment_path(@genre, @topic, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>コメントはありません。</p>
+  <% end %>
+</div>
+
+
 
 <div class="text-center mb-4">
   <%= link_to 'もどる', genre_path(@topic.genre), class: 'btn btn-secondary' %>
