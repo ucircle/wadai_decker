@@ -1,10 +1,10 @@
-<h1>トピック一覧</h1>
-
-<ul>
-  <% @topics.each do |topic| %>
-    <li>
-      <%= link_to topic.title, genre_topic_path(topic.genre, topic) %>
-      <!-- 他のトピックの情報を表示 -->
-    </li>
-  <% end %>
-</ul>
+<div class="text-center mb-4">
+  <h1><%= params[:tag_name] %>の話題一覧</h1>
+  <ul class="list-unstyled">
+    <% @topics.each do |topic| %>
+      <li class="text-center mb-3">
+        <%= link_to topic.title, genre_topic_path(topic.genre, topic) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

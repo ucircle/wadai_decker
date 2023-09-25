@@ -5,15 +5,17 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
+    @topic = @comment.topic
+    @genre = @topic.genre
 
-    if current_customer.admin?  # 管理者のみがコメントを削除できる条件
+    if current_admin  # 管理者のみがコメントを削除できる条件
       @comment.destroy
       flash[:notice] = 'コメントを削除しました'
     else
       flash[:alert] = 'コメントを削除する権限がありません'
     end
 
-    redirect_to root_path
+    redirect_to genre_topic_path(@genre, @topic)
   end
 
   private

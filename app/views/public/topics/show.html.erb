@@ -57,7 +57,7 @@
     <% @topic.comments.each do |comment| %>
       <div class="alert alert-secondary">
         <%= comment.comment %>
-        <% if customer_signed_in? %>
+        <% if customer_signed_in? || admin_signed_in? %>
           <% if current_customer == comment.customer || admin_signed_in? %>
             <% if admin_signed_in? %>
               <%= link_to 'コメントを削除', admin_topic_comment_path(@topic, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
@@ -80,7 +80,9 @@
 </div>
 
 <div class="text-center">
+  <% if current_customer.present? %>
   <%= link_to 'マイページ', customer_path(current_customer.id), class: 'btn btn-primary' %>
+  <% end %>
 </div>
 
 
