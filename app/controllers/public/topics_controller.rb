@@ -58,7 +58,12 @@ end
 
 def random_topics
     @genre = Genre.find(params[:genre_id])
-    @random_topics = Topic.order("RANDOM()").limit(5) # ランダムなトピックを5つ取得
+
+    if Rails.env.production?
+      @random_topics = Topic.order("RAND()").limit(5) # ランダムなトピックを5つ取得
+    elsif Rails.env.development?
+      @random_topics = Topic.order("RANDOM()").limit(5)
+    end
     respond_to do |format|
     format.html
     format.js
