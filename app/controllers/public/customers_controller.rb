@@ -10,26 +10,20 @@ class Public::CustomersController < ApplicationController
    end
 
     @bookmarked_topics = @customer.bookmarked_topics
-  end
-  
-  def random_topics
-    @genre = Genre.find(params[:genre_id])
+    @random_topics = []
 
     if Rails.env.production?
-      random_topics = @genre.topics.order("RAND()").limit(5) # ランダムなトピックを5つ取得
+      random_topics = Topic.order("RAND()").limit(5)
     elsif Rails.env.development?
-      random_topics = @genre.topics.order("RANDOM()").limit(5) # ランダムなトピックを5つ取得
+      random_topics = Topic.order("RANDOM()").limit(5)
     end
-    # ランダムトピックにURLを設定
-    @random_topics = []
+
     random_topics.each do |topic|
-      topic.url = genre_topic_path(@genre, topic)
+      topic.set_url(genre_topic_path(topic.genre, topic))
       @random_topics.push(topic)
     end
-    respond_to do |format|
-      format.json { render json: @random_topics }
-    end
-    
+
+
   end
 
 

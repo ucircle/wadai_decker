@@ -69,7 +69,9 @@ def remove_tag
 end
 
 def random_topics
-  @genre = Genre.find(params[:genre_id])
+  genre_id = params[:genre_id] # ジャンルIDをパラメーターから取得
+  @genre = Genre.find(genre_id)
+
 
   if Rails.env.production?
     random_topics = @genre.topics.order("RAND()").limit(5) # ランダムなトピックを5つ取得

@@ -23,7 +23,7 @@ scope module: :public do
       post :create_topic # 新しいトピックを作成するアクションに対応するルートを追加
     end
     resources :topics, only: [:new, :create, :index, :show, :update] do
-      collection do
+      member do
         get :random_topics # ランダムなトピックを表示するためのルートを追加
       end
       member do
