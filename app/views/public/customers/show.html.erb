@@ -16,7 +16,7 @@
   </div>
 
 
- <div class="row mt-4">
+ <div class="row mt-4 mb-4">
   <div class="col mx-auto">
     <div class="card-body text-center">
       <!-- ボタンをクリックしたときにランダムなトピックを取得するためのボタンを追加 -->
@@ -28,7 +28,7 @@
 <div class="row mt-4">
   <div class="col mx-auto text-center">
     <div class="card border-primary mb-3">
-      <div class="card-body" id="random-topic-container">
+      <div class="card-body mb-5" id="random-topic-container" style="max-height: 200px; overflow-y: auto;">
         <!-- ランダムなトピックを表示するためのコンテナ -->
         <ul id="random-topic-list">
           <!-- ここにランダムなトピックが表示されます -->
@@ -49,6 +49,7 @@
       success: function(response) {
         // 取得したHTMLをコンテナに表示
         $('#random-topic-container').html(response);
+        $('#content').scrollTop(0); // ヘッダーを除いたコンテナのIDを指定
       },
       error: function() {
         // エラーハンドリング
