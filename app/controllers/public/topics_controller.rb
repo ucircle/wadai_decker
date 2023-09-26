@@ -70,9 +70,10 @@ end
 
 def random_topics
   @genre = Genre.find(params[:genre_id])
+  
   if Rails.env.production?
     random_topics = @genre.topics.order("RAND()").limit(5) # ランダムなトピックを5つ取得
-  else
+  elsif Rails.env.development?
     random_topics = @genre.topics.order("RANDOM()").limit(5) # ランダムなトピックを5つ取得
   end
   # ランダムトピックにURLを設定
