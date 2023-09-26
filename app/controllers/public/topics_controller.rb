@@ -55,6 +55,19 @@ def update
   end
 end
 
+def remove_tag
+  @topic = Topic.find(params[:id])
+  @tag_to_remove = params[:tag]
+
+  if @topic.tag_list.remove(@tag_to_remove)
+    @topic.save
+    redirect_to genre_topic_path(@topic.genre, @topic), notice: 'タグが削除されました'
+  else
+    flash.now[:alert] = 'タグの削除に失敗しました'
+    render :show
+  end
+end
+
 
 def random_topics
     @genre = Genre.find(params[:genre_id])

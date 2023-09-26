@@ -25,7 +25,10 @@ scope module: :public do
     resources :topics, only: [:new, :create, :index, :show, :update] do
       collection do
         get :random_topics # ランダムなトピックを表示するためのルートを追加
-       end
+      end
+      member do
+        delete 'remove_tag', to: 'topics#remove_tag'
+      end
       resources :comments, only: [:index, :create, :destroy]
       resources :bookmarks, only: [:create, :destroy]
     end
