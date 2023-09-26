@@ -9,8 +9,12 @@ class Public::CustomersController < ApplicationController
     @genre = Genre.first
    end
 
-   @bookmarked_topics = @customer.bookmarked_topics
-   @random_topics = Topic.order("RANDOM()").limit(5)
+    @bookmarked_topics = @customer.bookmarked_topics
+    @random_topics = []
+    Topic.order("RANDOM()").limit(5).each do |topic|
+      topic.set_url(genre_topic_path(topic.genre, topic))
+      @random_topics.push(topic)
+    end
 
   end
 

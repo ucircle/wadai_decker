@@ -27,8 +27,8 @@
 
 <div class="row mt-4">
   <div class="col mx-auto text-center">
-    <div class="card border-primary mb-3">
-      <div class="card-body mb-5" id="random-topic-container" style="max-height: 200px; overflow-y: auto;">
+    <div class="card border-primary">
+      <div class="card-body" id="random-topic-container" style="max-height: 200px;">
         <!-- ランダムなトピックを表示するためのコンテナ -->
         <ul id="random-topic-list">
           <!-- ここにランダムなトピックが表示されます -->
@@ -40,7 +40,27 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  // ボタンクリック時のイベントハンドラ
+// ボタンクリック時のイベントハンドラ
+  $('#random-topic-button').on('click', function() {
+    // JSONデータを取得
+    var randomTopicsData = <%= raw @random_topics.to_json %>;
+
+    // 取得したJSONデータを処理
+    $('#random-topic-list').empty(); // コンテナをクリア
+
+    for (var i = 0; i < randomTopicsData.length; i++) {
+      var topic = randomTopicsData[i];
+      console.log(topic)
+      if (topic.url) {
+        var link = '<a href="' + topic.url + '">' + topic.title + '</a>';
+        $('#random-topic-list').append('<li>' + link + '</li>');
+      } else {
+        console.error('Topic URL is missing:', topic);
+      }
+    }
+  });
+
+/*  // ボタンクリック時のイベントハンドラ
   $('#random-topic-button').on('click', function() {
     $.ajax({
       url: '<%= random_topics_genre_topics_path(@genre) %>', // ランダムなトピックを取得するルートへのパス
@@ -57,4 +77,5 @@
       }
     });
   });
+  */
 </script>

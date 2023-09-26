@@ -54,3 +54,13 @@
   font-size: 20px; /* フォントサイズを大きくする */
   padding: 10px 15px; /* パディングを追加してリンクを大きくする */
 }
+
+#random-topic-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* リストアイテムのスタイルをカスタマイズする */
+#random-topic-list li {
+  margin-bottom: 10px; /* 各アイテムの下に余白を追加 */
+}
