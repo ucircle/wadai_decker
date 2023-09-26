@@ -10,12 +10,11 @@ class Public::CustomersController < ApplicationController
    end
 
     @bookmarked_topics = @customer.bookmarked_topics
-    @random_topics = []
-    Topic.order("RANDOM()").limit(5).each do |topic|
-      topic.set_url(genre_topic_path(topic.genre, topic))
-      @random_topics.push(topic)
+    if Rails.env.production?
+      @random_topics = @genre.topics.order("RAND()").limit(5) # ランダムなトピックを5つ取得
+    elsif Rails.env.development?
+      @random_topics = @genre.topics.order("RANDOM()").limit(5) # ランダムなトピックを5つ取得
     end
-
   end
 
 
