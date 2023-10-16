@@ -15,6 +15,14 @@
   <body>
    <main>
     <%= render 'layouts/header' %>
+
+    <!-- フラッシュメッセージを表示 -->
+    <% flash.each do |key, value| %>
+      <div class="flash-<%= key %>">
+        <%= value %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </main>
   </body>
