@@ -9,7 +9,7 @@ class Public::GenresController < ApplicationController
 
   def show
     @genre = Genre.find(params[:id])
-    @topics = @genre.topics.page(params[:page]).per(10)
+    @topics = @genre.topics.order(bookmarks_count: :desc).page(params[:page]).per(10)
     @new_topic = Topic.new
   end
 

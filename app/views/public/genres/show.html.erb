@@ -8,6 +8,7 @@
         <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title"><%= link_to topic.title, genre_topic_path(@genre, topic) %></h5>
+            <p class="card-text">ブックマーク数: <%= topic.bookmarks_count %></p>
           </div>
         </div>
       <% end %>

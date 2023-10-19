@@ -7,6 +7,10 @@ class Topic < ApplicationRecord
 
  has_many :bookmarks
 
+  def bookmarks_count
+     bookmarks.count
+  end
+
  attribute :url
  validates :title, presence: true
  def set_url(u)
